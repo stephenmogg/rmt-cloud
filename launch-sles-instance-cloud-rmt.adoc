@@ -55,7 +55,9 @@ An example of the architecture for the deployment can be seen below:
 
 // ifeval::[ "{cloud}" == "Google Cloud Platform" ]
 // image::TRD-gcp-example-architecture.png[title=GCP Example RMT Architecture,scaledwidth=99%]
-endif::[]
+// endif::[]
+
+image::generic-example-rmt-architecture.png[title=GCP Example RMT Architecture,scaledwidth=99%]
 
 This guide is split into the following sections.
 
