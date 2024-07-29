@@ -1,7 +1,6 @@
 
 // This documentation was added to support the existing quickstart. 
 // https://documentation.suse.com/liberty/7/single-html/quickstart/index.html
-
 // It is a suplement to Secton 2 and is/will be reference from that section.
 
 // enable docinfo
@@ -140,16 +139,12 @@ ifeval::[ "{cloud}" == "Azure" ]
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
-When launching the {sles} instance to support RMT, it possible to use an existing AWS security group or create a new one.  Ensure that the security group is configured to allow inbound access to the RMT server from your clients (HTTP/ HTTPS).   
+When launching the {sles} instance to support RMT, it possible to use an existing AWS security group or create a new one.  Ensure that the security group is configured to allow inbound access to the RMT server from your clients (HTTP / HTTPS).   
 endif::[]
 
 ifeval::[ "{cloud}" == "Google Cloud Platform" ]
 // ...
 endif::[]
-
-=== 
-
-
 
 
 ifeval::[ "{cloud}" == "Azure" ]
