@@ -1,5 +1,5 @@
 
-// This documentation was added to support the existing quickstart. 
+// This documentation was added to support the existing quickstart.
 // https://documentation.suse.com/liberty/7/single-html/quickstart/index.html
 // It is a suplement to Secton 2 and is/will be reference from that section.
 
@@ -57,7 +57,7 @@ An example of the architecture for the deployment can be seen below:
 // image::TRD-gcp-example-architecture.png[title=GCP Example RMT Architecture,scaledwidth=99%]
 // endif::[]
 
-image::generic-example-rmt-architecture.png[title=GCP Example RMT Architecture,scaledwidth=99%]
+image::generic-example-rmt-architecture.png[title=Example RMT Architecture,scaledwidth=99%]
 
 This guide is split into the following sections.
 
@@ -67,16 +67,17 @@ This guide is split into the following sections.
 
 == Using a BYOS image
 SUSE provides images for {sles} in {cloud}. They typically come in two flavours, PAYG (Pay As You Go), and BYOS (Bring Your Own Subscription).  These images are updated at regular intervals, so it is suggested to deploy new instances from the latest version of the image to ensure the most recent security updates are in place.
-In order to support the use of RMT, it is recommended to deploy a {sles} instance from a BYOS image.  
+In order to support the use of RMT, it is recommended to deploy a {sles} instance from a BYOS image.
 
 == Where to find the images in the {cloud} Marketplace
 ifeval::[ "{cloud}" == "Azure" ]
-// ...
+When using {cloud}, {sles} BYOS images can be found in the Azure Marketplace. BYOS images have 'BYOS' in the name, the images with '24x7' are PAYG images.
+image::azure-launch-sles-instance-cloud-rmt-marketplace.png[title=Azure Marketplace,scaledwidth=99%]
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
 When using {cloud}, {sles} BYOS AMIs can be found in the AWS Marketplace, BYOS AMIs have 'byos' in the name.
-image::aws-launch-sles-instance-cloud-rmt-marketplace.png[title=AWS Example RMT Architecture,scaledwidth=99%]
+image::aws-launch-sles-instance-cloud-rmt-marketplace.png[title=AWS Marketplace,scaledwidth=99%]
 // https://us-east-1.console.aws.amazon.com/marketplace/home#/search!mpSearch/search?text=suse+linux+enterprise+Server+15+family+byos+
 
 endif::[]
@@ -89,7 +90,7 @@ endif::[]
 After deployment, connect to the instance and register it with the SUSE Customer Center (SCC)
 
 ifeval::[ "{cloud}" == "Azure" ]
-// ...
+Connect to the {sles} instance in Azure using SSH.
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
@@ -105,7 +106,7 @@ ifeval::[ "{cloud}" == "Google Cloud Platform" ]
 // ...
 endif::[]
 
-Run the following command to register the SLES instance with the SCC.
+Run the following command to register the SLES instance with the SCC (replace email and registration code with your values).
 
 ----
 sudo SUSEConnect -e EMAIL_ADDRESS -r REGISTRATION_CODE
@@ -115,10 +116,10 @@ sudo SUSEConnect -e EMAIL_ADDRESS -r REGISTRATION_CODE
 
 === Disk Space
 The RMT server needs enough available disk space to mirror the SUSE Liberty Linux LTSS 7 repositories. Downloaded packages are stored in /var/lib/rmt/public/repo/. The amount of storage required depends on the number of repositories you mirror. We recommend at least 1.5 times the total size of all enabled repositories.
-Best practice would be to provision an additional disk volume to support this requirment.
+Best practice would be to provision an additional disk volume to support this requirement.
 
 ifeval::[ "{cloud}" == "Azure" ]
-// ...
+In {cloud} this would be an additional volume. Mount the volume to '/var/lib/rmt/public/repo/' at instance creation, or immediately after launch.
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
@@ -133,7 +134,7 @@ endif::[]
 A static IP address or DNS name is required in order for clients to connect to RMT.
 
 ifeval::[ "{cloud}" == "Azure" ]
-// ...
+In {cloud}, a CSP provided DNS is assigned when the instance is launched, but this IP/DNS address may change if the instance is recreated for any reason.  Consider using a static IP to provide a consistent connection point for your clients.
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
@@ -149,11 +150,11 @@ endif::[]
 The RMT server will need connectivity to the SCC (SUSE Customer Center) over port 80 & 443. There are many ways to provide connectivity.
 
 ifeval::[ "{cloud}" == "Azure" ]
-// ...
+If your RMT instance is in a Private Subnet, connectivity to the SCC need to be setup. There are various ways to do this in Azure.
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
-For example in {cloud}, depending on whether the RMT instance is in a Public or Private Subnet, connectivty to the SCC can be provided via an AWS Internet Gateway, an AWS NAT Gateway, or via a local datacenter (VPN/DX Connenction).
+For example in {cloud}, depending on whether the RMT instance is in a Public or Private Subnet, connectivity to the SCC can be provided via an AWS Internet Gateway, an AWS NAT Gateway, or via a local datacenter (VPN/DX Connenction).
 endif::[]
 
 ifeval::[ "{cloud}" == "Google Cloud Platform" ]
@@ -164,11 +165,11 @@ endif::[]
 Clients connecting to RMT will need to do so over port 80 & Port 443.
 
 ifeval::[ "{cloud}" == "Azure" ]
-// ...
+When launching the {sles} instance to support RMT, check that the Network security group is configured to allow inbound access to the RMT server from your clients (HTTP / HTTPS).
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
-When launching the {sles} instance to support RMT, it possible to use an existing AWS security group or create a new one.  Ensure that the security group is configured to allow inbound access to the RMT server from your clients (HTTP / HTTPS).   
+When launching the {sles} instance to support RMT, it possible to use an existing AWS security group or create a new one.  Ensure that the security group is configured to allow inbound access to the RMT server from your clients (HTTP / HTTPS).
 endif::[]
 
 ifeval::[ "{cloud}" == "Google Cloud Platform" ]
@@ -187,5 +188,3 @@ endif::[]
 ifeval::[ "{cloud}" == "Google Cloud Platform" ]
 // ...
 endif::[]
-
-
