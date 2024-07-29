@@ -50,7 +50,7 @@ image::TRD-azure-example-RMT-Architecture.png[title=Azure Example RMT Architectu
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
-image::TRD-aws-example-RMT-architecture.jpg[title=AWS Example RMT Architecture,scaledwidth=99%]
+image::TRD-aws-example-RMT-architecture.png[title=AWS Example RMT Architecture,scaledwidth=99%]
 endif::[]
 
 ifeval::[ "{cloud}" == "Google Cloud Platform" ]
