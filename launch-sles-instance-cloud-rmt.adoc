@@ -1,0 +1,167 @@
+
+// This documentation was added to support the existing quickstart. 
+// https://documentation.suse.com/liberty/7/single-html/quickstart/index.html
+
+// It is a suplement to Secton 2 and is/will be reference from that section.
+
+// enable docinfo
+:docinfo:
+
+// the ifdef's make it possible to only change the DC file for generating the right document
+ifdef::Azure[]
+:cloud: Azure
+:firstname: Peter
+:surname: Schinagl
+:jobtitle: Senior Technical Architect
+endif::[]
+
+ifdef::AWS[]
+:cloud: AWS
+:firstname: Stephen
+:surname: Mogg
+:jobtitle: Public Cloud Solutions Architect
+endif::[]
+
+ifdef::GCP[]
+:cloud: Google Cloud Platform
+:firstname: Abdelrahman
+:surname: Mohamed
+:jobtitle: Public Cloud Solutions Architect - Google Alliance
+endif::[]
+
+// only enable it for editor previews - do not check it in with this change
+//:cloud: Azure
+//:cloud: AWS
+//:cloud: GCP
+
+:sles: SUSE Linux Enterprise Server
+
+= Deploy a {sles} instance to supprt RMT (Repository Mirroring Tool) on {cloud}
+
+== About the guide
+
+This document will walk you through the deployment of a simple {sles} instance operating on {cloud}.
+
+This instance can be used to support a deployment of RMT, which can be used to mirror updates from the SUSE Customer Center.
+
+An example of the architecture for the deployment can be seen below:
+
+ifeval::[ "{cloud}" == "Azure" ]
+image::TRD-azure-example-RMT-Architecture.png[title=Azure Example RMT Architecture,scaledwidth=99%]
+endif::[]
+
+ifeval::[ "{cloud}" == "AWS" ]
+image::TRD-aws-example-RMT-architecture.jpg[title=AWS Example RMT Architecture,scaledwidth=99%]
+endif::[]
+
+ifeval::[ "{cloud}" == "Google Cloud Platform" ]
+image::TRD-gcp-example-architecture.png[title=GCP Example RMT Architecture,scaledwidth=99%]
+endif::[]
+
+This guide is split into the following sections.
+
+* Using a BYOS image
+* Considerations when using RMT
+
+== Using a BYOS image
+SUSE provides images for {sles} in {cloud}. They typically come in two flavours, PAYG (Pay As You Go), and BYOS (Bring Your Own Subscription).  These images are updated at regular intervals, so it is suggested to deploy new instances from the latest version of the image to ensure the most recent security updates are in place.
+In order to support the use of RMT, it is recommended to deploy a {sles} instance from a BYOS image.  
+
+== Where to find the images in the {cloud} Marketplace
+ifeval::[ "{cloud}" == "Azure" ]
+// ...
+endif::[]
+
+ifeval::[ "{cloud}" == "AWS" ]
+When using {cloud}, {sles} BYOS AMIs can be found in the AWS Marketplace.
+image::aws-launch-sles-instance-cloud-rmt-marketplace.png[title=AWS Example RMT Architecture,scaledwidth=99%]
+// https://us-east-1.console.aws.amazon.com/marketplace/home#/search!mpSearch/search?text=suse+linux+enterprise+Server+15+family+byos+
+
+endif::[]
+
+ifeval::[ "{cloud}" == "Google Cloud Platform" ]
+// ...
+endif::[]
+
+== Considerations when using RMT
+
+=== Disk Space
+The RMT server needs enough available disk space to mirror the SUSE Liberty Linux LTSS 7 repositories. Downloaded packages are stored in /var/lib/rmt/public/repo/. The amount of storage required depends on the number of repositories you mirror. We recommend at least 1.5 times the total size of all enabled repositories.
+Best practice would be to provision an additional disk volume to support this requirment.
+
+ifeval::[ "{cloud}" == "Azure" ]
+// ...
+endif::[]
+
+ifeval::[ "{cloud}" == "AWS" ]
+In {cloud} this would be an Amazon EBS volume. Mount the volume to '/var/lib/rmt/public/repo/' at instance creation, or immediately after launch.
+endif::[]
+
+ifeval::[ "{cloud}" == "Google Cloud Platform" ]
+// ...
+endif::[]
+
+=== IP / Name Resolution
+A static IP address or DNS name is required in order for clients to connect to RMT.
+
+ifeval::[ "{cloud}" == "Azure" ]
+// ...
+endif::[]
+
+ifeval::[ "{cloud}" == "AWS" ]
+In {cloud}, a CSP provided DNS is assigned when the instance is launched, but this IP/DNS address may change if the instance is recreated for any reason.  Consider using Route 53 to provide a consistent connection point for your clients.
+endif::[]
+
+ifeval::[ "{cloud}" == "Google Cloud Platform" ]
+// ...
+endif::[]
+
+
+=== Connectivity (RMT)
+The RMT server will need connectivity to the SCC (SUSE Customer Center) over port 80 & 443. There are many ways to provide connectivity.
+
+ifeval::[ "{cloud}" == "Azure" ]
+// ...
+endif::[]
+
+ifeval::[ "{cloud}" == "AWS" ]
+For example in {cloud}, depending on whether the RMT instance is in a Public or Private Subnet, connectivty to the SCC can be provided via an AWS Internet Gateway, an AWS NAT Gateway, or via a local datacenter (VPN/DX Connenction).
+endif::[]
+
+ifeval::[ "{cloud}" == "Google Cloud Platform" ]
+// ...
+endif::[]
+
+=== Connectivity (Clients)
+Clients connecting to RMT will need to do so over port 80 & Port 443.
+
+ifeval::[ "{cloud}" == "Azure" ]
+// ...
+endif::[]
+
+ifeval::[ "{cloud}" == "AWS" ]
+When launching the {sles} instance to support RMT, it possible to use an existing AWS security group or create a new one.  Ensure that the security group is configured to allow inbound access to the RMT server from your clients (HTTP/ HTTPS).   
+endif::[]
+
+ifeval::[ "{cloud}" == "Google Cloud Platform" ]
+// ...
+endif::[]
+
+=== 
+
+
+
+
+ifeval::[ "{cloud}" == "Azure" ]
+// ...
+endif::[]
+
+ifeval::[ "{cloud}" == "AWS" ]
+// ...
+endif::[]
+
+ifeval::[ "{cloud}" == "Google Cloud Platform" ]
+// ...
+endif::[]
+
+
