@@ -73,7 +73,7 @@ ifeval::[ "{cloud}" == "Azure" ]
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
-When using {cloud}, {sles} BYOS AMIs can be found in the AWS Marketplace.
+When using {cloud}, {sles} BYOS AMIs can be found in the AWS Marketplace, BYOS AMIs have 'byos' in the name.
 image::aws-launch-sles-instance-cloud-rmt-marketplace.png[title=AWS Example RMT Architecture,scaledwidth=99%]
 // https://us-east-1.console.aws.amazon.com/marketplace/home#/search!mpSearch/search?text=suse+linux+enterprise+Server+15+family+byos+
 
@@ -84,7 +84,30 @@ ifeval::[ "{cloud}" == "Google Cloud Platform" ]
 endif::[]
 
 == Registering the Instance
-SUSEConnect -e EMAIL_ADDRESS -r REGISTRATION_CODE
+After deployment, connect to the instance and register it with the SUSE Customer Center (SCC)
+
+ifeval::[ "{cloud}" == "Azure" ]
+// ...
+endif::[]
+
+ifeval::[ "{cloud}" == "AWS" ]
+Connect to the {sles} instance in AWS using SSH.
+
+----
+ssh -i your_ssh_key ec2-user@server_ip
+----
+
+endif::[]
+
+ifeval::[ "{cloud}" == "Google Cloud Platform" ]
+// ...
+endif::[]
+
+Run the following command to register the SLES instance with the SCC.
+
+----
+sudo SUSEConnect -e EMAIL_ADDRESS -r REGISTRATION_CODE
+----
 
 == Considerations when using RMT
 
