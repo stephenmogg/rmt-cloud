@@ -60,6 +60,7 @@ endif::[]
 This guide is split into the following sections.
 
 * Using a BYOS image
+* Registering the instance
 * Considerations when using RMT
 
 == Using a BYOS image
@@ -81,6 +82,9 @@ endif::[]
 ifeval::[ "{cloud}" == "Google Cloud Platform" ]
 // ...
 endif::[]
+
+== Registering the Instance
+SUSEConnect -e EMAIL_ADDRESS -r REGISTRATION_CODE
 
 == Considerations when using RMT
 
