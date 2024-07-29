@@ -35,7 +35,7 @@ endif::[]
 
 :sles: SUSE Linux Enterprise Server
 
-= Deploy a {sles} instance to supprt RMT (Repository Mirroring Tool) on {cloud}
+= Deploy a {sles} instance to support RMT (Repository Mirroring Tool) on {cloud}
 
 == About the guide
 
@@ -45,16 +45,16 @@ This instance can be used to support a deployment of RMT, which can be used to m
 
 An example of the architecture for the deployment can be seen below:
 
-ifeval::[ "{cloud}" == "Azure" ]
-image::TRD-azure-example-RMT-Architecture.png[title=Azure Example RMT Architecture,scaledwidth=99%]
-endif::[]
+// ifeval::[ "{cloud}" == "Azure" ]
+// image::TRD-azure-example-RMT-Architecture.png[title=Azure Example RMT Architecture,scaledwidth=99%]
+// endif::[]
 
-ifeval::[ "{cloud}" == "AWS" ]
-image::TRD-aws-example-RMT-architecture.png[title=AWS Example RMT Architecture,scaledwidth=99%]
-endif::[]
+//ifeval::[ "{cloud}" == "AWS" ]
+//image::TRD-aws-example-RMT-architecture.png[title=AWS Example RMT Architecture,scaledwidth=99%]
+//endif::[]
 
-ifeval::[ "{cloud}" == "Google Cloud Platform" ]
-image::TRD-gcp-example-architecture.png[title=GCP Example RMT Architecture,scaledwidth=99%]
+// ifeval::[ "{cloud}" == "Google Cloud Platform" ]
+// image::TRD-gcp-example-architecture.png[title=GCP Example RMT Architecture,scaledwidth=99%]
 endif::[]
 
 This guide is split into the following sections.
