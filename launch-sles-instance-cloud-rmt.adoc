@@ -79,7 +79,7 @@ ifeval::[ "{cloud}" == "AWS" ]
 When using {cloud}, {sles} BYOS AMIs can be found in the AWS Marketplace, BYOS AMIs have 'byos' in the name.
 image::aws-launch-sles-instance-cloud-rmt-marketplace.png[title=AWS Marketplace,scaledwidth=99%]
 // https://us-east-1.console.aws.amazon.com/marketplace/home#/search!mpSearch/search?text=suse+linux+enterprise+Server+15+family+byos+
-
+Consider using an m5.xlarge or similar (2-4 vcpu and 8GB RAM)
 endif::[]
 
 ifeval::[ "{cloud}" == "Google Cloud Platform" ]
