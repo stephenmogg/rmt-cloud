@@ -40,9 +40,9 @@ When using AWS, {sles} BYOS AMIs can be found in the AWS Marketplace, BYOS AMIs 
 
 image::aws-launch-sles-instance-cloud-rmt-marketplace.png[title=AWS Marketplace,scaledwidth=99%]
 
-Consider using an m5.xlarge or similar (2-4 vcpu and 8GB RAM) as the instance type to support the RMT deployment.
-
-// When using Google Cloud Platform ....
+=== Instance type
+Use an instance type with 2-3 vcpus and at least 8GB of RAM to support the RMT deployment.
+e.g. in AWS this would be an m5.xlarge or similar.
 
 == Registering the Instance
 After deployment, connect to the instance and register it with the SUSE Customer Center (SCC)
