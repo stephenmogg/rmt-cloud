@@ -33,10 +33,13 @@ In order to support the use of RMT, it is recommended to deploy a {sles} instanc
 == Where to find the images in the Cloud Marketplace
 
 When using Azure, {sles} BYOS images can be found in the Azure Marketplace. BYOS images have 'BYOS' in the name, the images with '24x7' are PAYG images.
+
 image::azure-launch-sles-instance-cloud-rmt-marketplace.png[title=Azure Marketplace,scaledwidth=99%]
 
 When using AWS, {sles} BYOS AMIs can be found in the AWS Marketplace, BYOS AMIs have 'byos' in the name.
+
 image::aws-launch-sles-instance-cloud-rmt-marketplace.png[title=AWS Marketplace,scaledwidth=99%]
+
 Consider using an m5.xlarge or similar (2-4 vcpu and 8GB RAM) as the instance type to support the RMT deployment.
 
 // When using Google Cloud Platform ....
@@ -44,27 +47,11 @@ Consider using an m5.xlarge or similar (2-4 vcpu and 8GB RAM) as the instance ty
 == Registering the Instance
 After deployment, connect to the instance and register it with the SUSE Customer Center (SCC)
 
-Connect to the {sles} instance in Azure using SSH.
-
-// Peterfix
-// Example connection command for Azure
-// ----
-// ssh -i your_ssh_key ec2-user@server_ip
-// ----
-
-
-Example connection command for AWS
+Example connection command for AWS, you will need to alter this for other cloud platforms.
 
 ----
 ssh -i your_ssh_key ec2-user@server_ip
 ----
-
-// Abfix
-// Example connection command for GCP
-// ----
-// ssh -i your_ssh_key ec2-user@server_ip
-// ----
-
 
 After launch, run the following command to register the SLES instance with the {sccfull}. The registration code is available by logging into the SCC and viewing available subscriptinos.
 
@@ -72,7 +59,7 @@ After launch, run the following command to register the SLES instance with the {
 sudo SUSEConnect -e EMAIL_ADDRESS -r REGISTRATION_CODE
 ----
 
-(Replace email and registration code with your values).
+(Replace the email address and registration code with your values).
 
 == Considerations when using RMT
 
