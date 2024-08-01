@@ -16,7 +16,7 @@ This document will walk you through the deployment of a simple {sles} instance o
 
 This instance can be used to support a deployment of RMT, which can be used to mirror updates from the {sccfull}.
 
-An example of a cloud architecture for the deployment can be seen below, your deploymnet may look different depending on your networking standards:
+An example of a cloud architecture for the deployment can be seen below, your deployment may look different depending on your networking standards:
 
 image::generic-example-rmt-architecture.png[title=Example RMT Architecture,scaledwidth=99%]
 
@@ -27,7 +27,7 @@ This guide is split into the following sections:
 * Considerations when using RMT
 
 == Using a BYOS image
-SUSE provides images for {sles} in AWS, Azure and GCP. They typically come in two flavours, PAYG (Pay As You Go), and BYOS (Bring Your Own Subscription).  These images are updated at regular intervals, so it is suggested to deploy new instances from the latest version of the image to ensure the most recent security updates are in place.
+SUSE provides images for {sles} in AWS, Azure and GCP. They typically come in two flavours, PAYG (Pay As You Go), and BYOS (Bring Your Own Subscription). These images are updated at regular intervals, so it is suggested to deploy new instances from the latest version of the image to ensure the most recent security updates are in place.
 In order to support the use of RMT, it is recommended to deploy a {sles} instance from a BYOS image.
 
 == Where to find the images in the Cloud Marketplace
@@ -40,20 +40,30 @@ When using AWS, {sles} BYOS AMIs can be found in the AWS Marketplace, BYOS AMIs 
 
 image::aws-launch-sles-instance-cloud-rmt-marketplace.png[title=AWS Marketplace,scaledwidth=99%]
 
+When using GCP, {sles} BYOS images can be found in the Google Cloud Marketplace. BYOS images have 'BYOS' in the name, the images with '24x7' are PAYG images.
+
+image::gcp-launch-sles-instance-cloud-rmt-marketplace.png[title=Google Cloud Marketplace,scaledwidth=99%]
+
 === Instance type
 Use an instance type with 2-3 vcpus and at least 8GB of RAM to support the RMT deployment.
-e.g. in AWS this would be an m5.xlarge or similar.
+e.g. in AWS this would be an m5.xlarge or similar. In GCP this would be an e2-standard-2 machine type or similar.
 
 == Registering the Instance
-After deployment, connect to the instance and register it with the SUSE Customer Center (SCC)
+After deployment, connect to the instance and register it with the {sccfull} (SCC)
 
-Example connection command for AWS, you will need to alter this for other cloud platforms.
+Example connection command for AWS:
 
 ----
 ssh -i your_ssh_key ec2-user@server_ip
 ----
 
-After launch, run the following command to register the SLES instance with the {sccfull}. The registration code is available by logging into the SCC and viewing available subscriptinos.
+Example connection command for GCP:
+
+----
+gcloud compute ssh <GCE Instance IP>
+----
+
+After launch, run the following command to register the SLES instance with the SCC. The registration code is available by logging into the SCC and viewing available subscriptions.
 
 ----
 sudo SUSEConnect -e EMAIL_ADDRESS -r REGISTRATION_CODE
@@ -70,8 +80,7 @@ Best practice would be to provision an additional disk volume to support this re
 
 Mount the volume to '/var/lib/rmt/public/repo/' at instance creation, or immediately after launch.
 
-In Azure this would be an additional volume, in AWS this would be an Amazon EBS volume. 
-// In GCP ...
+In Azure this would be an additional volume, in AWS this would be an Amazon EBS volume, in GCP this would be a https://cloud.google.com/compute/docs/disks/add-persistent-disk[persistent disk volume].
 
 === IP / Name Resolution
 A static IP address or DNS name is required in order for clients to connect to RMT.
@@ -80,21 +89,27 @@ In Azure, AWS and GCP, a CSP provided DNS is assigned when the instance is launc
 
 In Azure, consider using a static IP to provide a consistent connection point for your clients.
 In AWS this would be an elastic IP or Route53.
-// in GCP
-
+In GCP this would be a Cloud DNS record uses a static IP address.
 
 === Connectivity (RMT)
-The RMT server will need connectivity to the SCC (SUSE Customer Center) over port 80 & 443. There are many ways to provide connectivity.
+The RMT server will need connectivity to the SCC over port 80 & 443. There are many ways to provide connectivity.
 
-For example in AWS, depending on whether the RMT instance is in a Public or Private Subnet, connectivity to the SCC can be provided via an AWS Internet Gateway, an AWS NAT Gateway, or via a local datacenter (VPN/DX Connenction).
+For example in AWS, depending on whether the RMT instance is in a Public or Private Subnet, connectivity to the SCC can be provided via an AWS Internet Gateway, an AWS NAT Gateway, or via a local datacenter (VPN/DX Connection).
 
-Azure and GCP will have similar services and concepts available.
+GCP offers direct access to the internet using the VPC routes or Cloud NAT services.
+
+Azure will have similar services and concepts available.
 
 === Connectivity (Clients)
 Clients connecting to RMT will need to do so over port 80 & Port 443.
 
-When launching the {sles} instance to support RMT, check that the Network security group is configured to allow inbound access to the RMT server from your clients (HTTP / HTTPS).
+When launching the {sles} instance to support RMT
 
+In AWS, check that the Network security group is configured to allow inbound access to the RMT server from your clients (HTTP / HTTPS).
+
+In GCP, check that the firewall rules are configured to allow inbound access to the RMT server from your clients (HTTP / HTTPS).
+
+// Why do we have this paragraph? 
 When launching the {sles} instance to support RMT, it possible to use an existing AWS security group or create a new one.  Ensure that the security group is configured to allow inbound access to the RMT server from your clients (HTTP / HTTPS).
 
 // ...
